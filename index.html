@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NyPE · Apps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0d0e12;
+      --surface:   #161820;
+      --surface-2: #1e2030;
+      --border:    #2a2d3e;
+      --text:      #e8e9f0;
+      --muted:     #8b8fa8;
+      --gold:      #e8c547;
+      --gold-dark: #d4b03a;
+      --blue:      #5b8dee;
+      --shadow:    0 4px 24px rgba(0,0,0,0.4);
+      --radius:    14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 3rem;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .nype-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .nype-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .nype-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.75rem, 5vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+
+    .site-header p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── Grid ── */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ── App card ── */
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.18s, transform 0.15s;
+    }
+
+    .app-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .app-card:active {
+      transform: translateY(0);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .card-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-top: 0.25rem;
+    }
+
+    .card-link::after {
+      content: '→';
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      opacity: 0.6;
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1.25rem 0.75rem 2rem; }
+      .nype-sub { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="site-header">
+      <div class="nype-header">
+        <span class="nype-badge">NyPE</span>
+        <span class="nype-sub">Neurociencia y Psicología Experimental · UTDT</span>
+      </div>
+      <h1>Apps interactivas</h1>
+      <p>Experimentos y herramientas de visualización para explorar conceptos de neurociencia y psicología experimental.</p>
+    </header>
+
+    <div class="apps-grid">
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/two-armed-bandit/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🎰</div>
+        <div class="card-type">Experimento</div>
+        <div class="card-title">Bandido de dos brazos</div>
+        <p class="card-desc">Tarea clásica de aprendizaje por refuerzo. Elegís entre dos opciones durante 80 turnos e intentás maximizar tu puntaje.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/stroop/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🎨</div>
+        <div class="card-type">Experimento</div>
+        <div class="card-title">Stroop</div>
+        <p class="card-desc">Mide el efecto Stroop: la interferencia que produce leer el nombre de un color escrito en tinta de otro color.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/azar/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🎲</div>
+        <div class="card-type">Experimento</div>
+        <div class="card-title">Juego del Azar</div>
+        <p class="card-desc">Explora tus intuiciones sobre la probabilidad y el azar a través de una tarea de predicción de secuencias.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/umbral-de-deteccion/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">👁️</div>
+        <div class="card-type">Experimento</div>
+        <div class="card-title">Umbral de detección</div>
+        <p class="card-desc">Estima tu umbral de sensibilidad visual: la mínima diferencia de color que podés detectar entre dos regiones.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/correlacion/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">📈</div>
+        <div class="card-type">Visualización</div>
+        <div class="card-title">Correlación</div>
+        <p class="card-desc">Explorá cómo cambian el signo y la magnitud del coeficiente de correlación al modificar la dirección y fuerza de una asociación lineal.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/asignacion_aleatoria/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🔀</div>
+        <div class="card-type">Visualización</div>
+        <div class="card-title">Asignación aleatoria</div>
+        <p class="card-desc">Visualizá cómo la asignación aleatoria hace comparables al grupo experimental y de control a medida que crece el tamaño muestral.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/muestreo_aleatorio/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🎯</div>
+        <div class="card-type">Visualización</div>
+        <div class="card-title">Muestreo aleatorio</div>
+        <p class="card-desc">Observá cómo una muestra aleatoria se vuelve representativa de la población a medida que aumenta su tamaño.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+      <a class="app-card" href="https://gsolovey-utdt.github.io/set/" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">🃏</div>
+        <div class="card-type">Juego</div>
+        <div class="card-title">Set</div>
+        <p class="card-desc">Juego clásico de reconocimiento de patrones. Encontrá ternas de cartas donde cada atributo sea todo igual o todo distinto.</p>
+        <span class="card-link">Ir a la app</span>
+      </a>
+
+    </div>
+
+    <footer class="site-footer">
+      <p>Neurociencia y Psicología Experimental · UTDT · 2026</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
