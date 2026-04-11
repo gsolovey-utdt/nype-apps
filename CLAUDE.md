@@ -14,6 +14,10 @@ La carpeta `nype-apps/` contiene la **landing page** y 8 subcarpetas, cada una u
 nype-apps/
 ├── index.html               ← Landing page (repo: gsolovey-utdt/nype-apps)
 ├── CLAUDE.md
+├── log-DD-MM-YYYY.md        ← Un log por sesión (ver convención abajo)
+├── _templates/              ← Templates HTML base para nuevas apps
+│   ├── experimento.html
+│   └── visualizacion.html
 ├── two-armed-bandit/        ← repo independiente
 ├── stroop/
 ├── azar/
@@ -21,10 +25,17 @@ nype-apps/
 ├── correlacion/
 ├── asignacion_aleatoria/
 ├── muestreo_aleatorio/
-└── set/
+├── set/
+└── memoria-de-digitos/      ← repo independiente, tiene su propio CLAUDE.md
 ```
 
 Cada subcarpeta es un repo git clonado de `github.com/gsolovey-utdt/<repo>`. **No hay un repo raíz que las contenga a todas** — solo la landing page tiene su propio repo (`nype-apps`).
+
+## Logs de sesión
+
+Cada sesión (thread) de Claude Code genera un archivo `log-DD-MM-YYYY.md` en la raíz. Si hay más de una sesión en el mismo día, se agrega la hora: `log-DD-MM-YYYY-HHhMM.md`.
+
+El log documenta qué se hizo, qué se decidió y qué queda pendiente.
 
 ## Deploy
 
@@ -89,15 +100,76 @@ Variables CSS base (tema claro actual):
 
 | Tipo | Apps | Características |
 |------|------|----------------|
-| Experimento | two-armed-bandit, stroop, azar, umbral-de-deteccion | Pantalla única, flujo secuencial, datos a Supabase |
+| Experimento | two-armed-bandit, stroop, azar, umbral-de-deteccion, memoria-de-digitos | Pantalla única, flujo secuencial, datos a Supabase |
 | Visualización | correlacion, asignacion_aleatoria, muestreo_aleatorio | Layout dos columnas (controles + gráfico), Chart.js |
 | Juego | set | Sin backend, lógica en JS puro |
+
+## Nueva app — checklist
+
+Cuando Guillermo diga "quiero crear una nueva app llamada `<nombre>`", seguir estos pasos:
+
+### 1. Contexto mínimo necesario (pedirlo si falta)
+- Nombre del repo (slug, ej: `memoria-de-trabajo`)
+- Tipo: experimento / visualización / juego
+- Idea en 2–3 líneas: qué hace el usuario, qué aprende
+
+### 2. Crear la carpeta y el repo git local
+```bash
+cd /c/Users/guillermo.solovey/Dropbox/work/2026/nype-apps
+mkdir <nombre>
+cd <nombre>
+git init
+git checkout -b main
+```
+
+### 3. Crear el HTML base desde el template
+Copiar el template correspondiente de `_templates/`:
+- `_templates/experimento.html` → para flujo secuencial con datos a Supabase
+- `_templates/visualizacion.html` → para layout dos columnas con Chart.js
+- `_templates/juego.html` → para lógica JS pura sin backend
+
+Renombrarlo a `index.html` y adaptar título, descripción y lógica.
+
+### 4. Crear repo en GitHub y conectar remote
+```bash
+# Crear repo vacío en GitHub (via gh CLI o manualmente en github.com)
+gh repo create gsolovey-utdt/<nombre> --public --source=. --remote=origin
+
+# O si se crea manualmente, setear el remote con token:
+TOKEN="ghp_..."
+git remote add origin "https://gsolovey-utdt:${TOKEN}@github.com/gsolovey-utdt/<nombre>.git"
+```
+
+### 5. Primer commit y push
+```bash
+git add index.html
+git commit -m "Initial commit"
+GIT_TERMINAL_PROMPT=0 git push -u origin main
+```
+
+### 6. Activar GitHub Pages
+En `github.com/gsolovey-utdt/<nombre>` → Settings → Pages → Branch: main / (root) → Save.
+La app quedará en `https://gsolovey-utdt.github.io/<nombre>/`.
+
+### 7. Actualizar la landing page
+En `nype-apps/index.html` agregar la nueva card con link a la URL de GitHub Pages.
+Luego commitear y pushear el repo `nype-apps`.
+
+---
+
+## CLAUDE.md por app
+
+Las apps más desarrolladas pueden tener su propio `CLAUDE.md` dentro de su carpeta. Claude Code lo lee **además** del CLAUDE.md raíz al trabajar desde esa subcarpeta — no lo reemplaza. Hoy solo `memoria-de-digitos` tiene el suyo.
 
 ## Decisiones tomadas
 
 | Fecha | Decisión | Razionale |
 |-------|----------|-----------|
-| 2026-04 | Tema claro para todas las apps | Las apps de visualización con Chart.js se ven mejor sobre fondo blanco |
+| 2026-04 | Tema claro para las apps de visualización y juego | Chart.js se ve mejor sobre fondo blanco |
+| 2026-04 | Tema oscuro para las apps de experimento y la landing | Más inmersivo para tareas cognitivas |
 | 2026-04 | Supabase compartido para todas las apps de experimento | Un solo proyecto free, keep-alive centralizado en stroop |
 | 2026-04 | Links en landing apuntan a URLs públicas (GitHub Pages) | Las apps se sirven de repos independientes, no hay servidor común |
 | 2026-04 | Cada subcarpeta es un repo git independiente | Permite deployar cada app por separado en GitHub Pages |
+| 2026-04-09 | Logs por sesión con formato `log-DD-MM-YYYY.md` | Un archivo por thread para tener historial claro |
+| 2026-04-09 | Templates base en `_templates/` | Punto de partida para nuevas apps sin reescribir el sistema de diseño |
+| 2026-04-11 | CLAUDE.md por app para las apps más complejas | El CLAUDE.md raíz contiene convenciones globales; el de cada app, decisiones específicas. Claude lee ambos en cascada. |
