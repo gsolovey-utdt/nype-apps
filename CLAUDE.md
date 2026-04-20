@@ -66,7 +66,9 @@ git remote set-url origin "https://gsolovey-utdt:${TOKEN}@github.com/gsolovey-ut
 
 Las apps con resultados colectivos y leaderboard usan Supabase. **Todas comparten el mismo proyecto**: `irryksaoygdklwtsjsru.supabase.co`.
 
-El repo `stroop` tiene un workflow `.github/workflows/keep-alive.yml` que hace ping a Supabase dos veces por semana (lunes y jueves) para que el proyecto free no se pause. Cubre a todas las apps — no replicar a otros repos.
+El repo `stroop` tiene un workflow `.github/workflows/keep-alive.yml` que corre lunes y jueves a las 8am UTC y hace un PATCH a la tabla `keep_alive` de Supabase para que el proyecto free no se pause. Cubre a todas las apps — no replicar a otros repos.
+
+**Importante:** el ping debe ser una escritura real a la base de datos (PATCH/INSERT), no un GET. Un simple GET al REST API no cuenta como actividad para Supabase y el proyecto igual se pausa. La tabla `keep_alive` tiene una sola fila (`id=1`) con el campo `last_ping` que se actualiza en cada ejecución.
 
 ## Sistema de diseño
 
